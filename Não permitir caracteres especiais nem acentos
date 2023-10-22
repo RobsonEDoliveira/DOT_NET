@@ -1,0 +1,13 @@
+  @Html.TextBoxFor(m => m.UserName, new { id = "idusuario", type="text", placeholder = "Usuario", required = "required", autofocus = "" , maxlength="200", @tabindex="1", oninput="limparCaracteresEspeciais(this)", style = "margin-bottom: 0px;"})
+
+   <script>
+       function limparCaracteresEspeciais(inputElement) {
+           // Remove caracteres especiais e mantém apenas o alfabeto
+           var textoOriginal = inputElement.value;
+           var textoLimpo = textoOriginal.replace(/[^a-zA-Z]/g, '');
+
+           // Atualiza o valor do campo de entrada
+           inputElement.value = textoLimpo;
+       }
+
+   </script>
