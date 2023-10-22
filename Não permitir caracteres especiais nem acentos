@@ -1,4 +1,4 @@
-  @Html.TextBoxFor(m => m.UserName, new { id = "idusuario", type="text", placeholder = "Usuario", required = "required", autofocus = "" , maxlength="200", @tabindex="1", oninput="limparCaracteresEspeciais(this)", style = "margin-bottom: 0px;"})
+  @Html.TextBoxFor(m => m.UserName, new { id = "idusuario", type="text", placeholder = "Usuario", required = "required", autofocus = "" , maxlength="200", @tabindex="1", oninput="limparCaracteresEspeciais(this)"})
 
    <script>
        function limparCaracteresEspeciais(inputElement) {
