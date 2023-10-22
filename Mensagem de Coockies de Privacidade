@@ -1,5 +1,4 @@
-<head>
-    <!-- Cookies de Privacidade -->
+<head> ou no CSS
     <style>
         #cookie-alert {
             position: fixed;
@@ -16,7 +15,6 @@
             cursor: pointer;
         }
     </style>
-    <!-- Cookies de Privacidade -->
 </head>
 
 
