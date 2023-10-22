@@ -1,0 +1,45 @@
+<head>
+    <!-- Cookies de Privacidade -->
+    <style>
+        #cookie-alert {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            display: none; /* Inicialmente oculto */
+        }
+        #close-alert {
+            cursor: pointer;
+        }
+    </style>
+    <!-- Cookies de Privacidade -->
+</head>
+
+
+<body>
+    <div id="cookie-alert" style="background-color: #333; color: #fff; padding: 10px; text-align: center; display: none;">
+        Nosso site utiliza cookies para melhorar sua experiência conosco, utilizamos para fins de pesquisa e estatística, para mais informações consulte nossa Política de Privacidade.
+        <button id="close-alert" onclick="closeCookieAlert()" style="background-color: #e74c3c; color: #fff; border: none; padding: 5px 10px; cursor: pointer; width: auto;">Fechar</button>
+    </div>
+</body>
+
+
+  <script>
+      // Função para fechar o alerta
+      function closeCookieAlert() {
+          if (!document.cookie.includes('cookieAlertClosed=true')) {
+              // Se o cookie não existir, definir o cookie e fechar o alerta
+              document.cookie = 'cookieAlertClosed=true';
+              document.getElementById('cookie-alert').style.display = 'none';
+          }
+      }
+      // Verificar se o cookie "cookieAlertClosed" está definido
+      if (!document.cookie.includes('cookieAlertClosed=true')) {
+          // Se não estiver definido, exibir o alerta
+          document.getElementById('cookie-alert').style.display = 'block';
+      }
+  </script>
