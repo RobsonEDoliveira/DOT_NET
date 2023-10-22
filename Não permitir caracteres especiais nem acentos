@@ -9,5 +9,4 @@
            // Atualiza o valor do campo de entrada
            inputElement.value = textoLimpo;
        }
-
    </script>
