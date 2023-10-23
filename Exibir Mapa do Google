@@ -1,0 +1,33 @@
+<head>
+    <style>
+        #map {
+            width: 100%;
+            height: 800px;
+        }
+    </style>
+</head>
+
+// BODY
+  <div id="map"></div>
+
+// SCRIPT
+   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+   <script>
+       var brazilCoordinates = [-10.650943, -53.179219]; // Coordenadas para o centro do Brasil
+       var initialZoom = 4; // Zoom para exibir todo o Brasil
+
+       var map = L.map('map').setView(brazilCoordinates, initialZoom);
+
+       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+           maxZoom: 19,
+           attribution: '© OpenStreetMap contributors'
+       }).addTo(map);
+
+       var mapPoints = @Html.Raw(Json.Serialize(Model));
+       mapPoints.forEach(function (point) {
+           var marker = L.marker([point.latitude, point.longitude]).addTo(map);
+           marker.bindPopup("<strong>" + point.title + "</strong><br>" + point.description).openPopup();
+       });
+   </script>
