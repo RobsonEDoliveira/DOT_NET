@@ -1,0 +1,68 @@
+// Botão
+<button type="submit" id="submitButton" name="salvar" class="btn btn-secondary">
+    <span class="spinner-border spinner-border-sm" style="display: none;"></span> Salvar
+</button>
+
+// AJAX
+  <script>
+      $(document).ready(function () {
+          var $form = $("#AJAX_CadastrarPedido");
+
+          // Spinner Loader
+          var $submitButton = $("#submitButton");
+
+          $(document).ajaxStart(function () {
+              $submitButton.find(".spinner-border").show(); // Mostrar o spinner quando uma requisição AJAX começar
+              $submitButton.prop("disabled", true); // Desabilitar o botão durante a ação
+          });
+
+          $(document).ajaxStop(function () {
+              $submitButton.find(".spinner-border").hide(); // Ocultar o spinner quando todas as requisições AJAX terminarem
+              $submitButton.prop("disabled", false); // Habilitar o botão após a ação
+          });
+          // Spinner Loader
+
+          $form.on('submit.CadastrarPedido', function (e) {
+              e.preventDefault();
+
+              // Se o usuário clicou em "Sim, salvar!", envie o formulário
+              var form = $(e.currentTarget)[0];
+              var formData = new FormData(form);
+
+              $.ajax({
+                  url: form.action,
+                  type: "POST",
+                  data: formData,
+                  contentType: false,
+                  cache: false,
+                  processData: false,
+
+                  success: function (data) {
+                      try {
+                          if (data && data.success) {
+                              notyf.success(data.message);
+
+                              if (data.redirectTo) {
+                                  // Aguarde por um curto período de tempo antes de redirecionar
+                                  setTimeout(function () {
+                                      var redirectToUrl = '@Url.Content("~")' + data.redirectTo;
+                                      window.location.href = redirectToUrl;
+                                  }, 3000); // Aguarda por 3 segundo (3000 milissegundos) antes de redirecionar
+                              }
+                          }
+                          else {
+                              notyf.error(data.message);
+                          }
+                      } catch (e) { }
+                  },
+                  error: function (xhr, status, error) {
+                      try {
+                          console.log(xhr.responseText);
+                          notyf.error("Houve um problema ao realizar as alterações.");
+                      } catch (e) { }
+                  }
+              });
+          });
+      });
+      });
+  </script>
