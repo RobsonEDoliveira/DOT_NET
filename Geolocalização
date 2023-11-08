@@ -1,0 +1,51 @@
+COLOQUE ESSE SCRIPT NA PÁGINA E DETERMINA O INTERVALO
+
+    <script>
+        function getLocationPeriodically() {
+            function sendLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        var latitude = position.coords.latitude;
+                        var longitude = position.coords.longitude;
+
+                        // Enviar a geolocalização para o servidor usando uma requisição AJAX
+                        $.ajax({
+                            url: '/Home/EnviarGeolocalizacao',
+                            method: 'POST',
+                            data: { latitude: latitude, longitude: longitude },
+                            success: function (response) {
+                                console.log('Geolocalização enviada com sucesso.');
+                            },
+                            error: function (error) {
+                                console.log('Erro ao enviar a geolocalização.');
+                            }
+                        });
+                    }, function (error) {
+                        console.log('Erro ao obter a geolocalização:', error);
+                    });
+                } else {
+                    console.log("Geolocalização não é suportada pelo seu navegador.");
+                }
+            }
+
+            // Chamar a função inicialmente e depois a cada 5 minutos (300.000 milissegundos)
+            sendLocation();
+            setInterval(sendLocation, 100);
+        }
+
+        $(document).ready(function () {
+            getLocationPeriodically();
+        });
+    </script>
+
+
+
+OBTER NA CONTROLLER
+   [HttpPost]
+   public IActionResult EnviarGeolocalizacao(double latitude, double longitude)
+   {
+       // Faça o que for necessário com os dados de latitude e longitude, como salvá-los no banco de dados ou usá-los para alguma lógica específica
+
+       // Exemplo de como retornar uma resposta
+       return Ok("Geolocalização recebida com sucesso.");
+   }
