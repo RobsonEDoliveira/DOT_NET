@@ -1,0 +1,64 @@
+<script>
+    function getLocationAndSend() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    // Envia a localização para o servidor usando AJAX
+                    $.ajax({
+                        url: '/Home/EnviarLocalizacao',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude
+                        }),
+                        success: function (response) {
+                            alert(response);
+                        },
+                        error: function (error) {
+                            alert("Erro ao enviar localização para o servidor.");
+                        }
+                    });
+                },
+                function (error) {
+                    handleLocationError(error);
+                },
+                {
+                    enableHighAccuracy: true, // Solicita uma leitura mais precisa
+                    timeout: 10000, // Tempo limite em milissegundos (ajustável)
+                    maximumAge: 0 // Idade máxima em milissegundos
+                }
+            );
+        } else {
+            alert("Geolocalização não é suportada pelo seu navegador.");
+        }
+    }
+
+    function handleLocationError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                alert("Permissão para obter a localização foi negada.");
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert("Informações de localização não estão disponíveis.");
+                break;
+            case error.TIMEOUT:
+                alert("Tempo limite para obter a localização foi excedido.");
+                break;
+            case error.UNKNOWN_ERROR:
+                alert("Ocorreu um erro desconhecido ao obter a localização.");
+                break;
+        }
+    }
+</script>
+
+
+// CONTROLLER
+  [HttpPost]
+  public IActionResult EnviarLocalizacao([FromBody] LocalizacaoModel model)
+  {
+      // Lógica para processar a localização recebida
+      // model.Latitude e model.Longitude contêm os dados de localização
+
+      return Ok("Localização recebida com sucesso!");
+  }
