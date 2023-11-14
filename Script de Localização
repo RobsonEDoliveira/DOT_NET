@@ -65,3 +65,8 @@
 
       return Ok("Localização recebida com sucesso!");
   }
+public class LocalizacaoModel
+{
+    public double Latitude { get; set; }
+    public double Longitude { get; set; }
+}
